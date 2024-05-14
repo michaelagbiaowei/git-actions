@@ -1,0 +1,26 @@
+name: Docker Image Vulnerability Scan
+
+on:
+  schedule:
+    - cron: '0 12 * * *' ##Detect your docker image vulnerability everyday at 12:00 (UTC).
+
+jobs:
+  scan:
+    name: Daily Vulnerability Scan 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Frontend Docker Image
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.FRONTEND_IMAGE }}:v1
+
+      - uses: lazy-actions/gitrivy@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.FRONTEND_IMAGE }}:v1
+
+      - name: Pull Backend Docker Imag
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.BACKEND_IMAGE }}:v1
+
+      - uses: lazy-actions/gitrivy@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.BACKEND_IMAGE }}:v1
