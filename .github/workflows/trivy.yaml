@@ -1,7 +1,12 @@
 name: Docker Image Vulnerability Scan
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - "build"
+    paths:
+      - "**/*"
+      - "!**/README.md"
   # schedule:
   #   - cron: "0 12 * * *" ##Detect your docker image vulnerability everyday at 12:00 (UTC).
 
