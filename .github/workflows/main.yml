@@ -60,7 +60,8 @@ jobs:
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: Run tests
         run: |
-         npm run test --prefix frontend
+          npm i jest
+          npm run test --prefix frontend
       - name: Run Security Scans
         run: |
           npm audit fix --prefix frontend
