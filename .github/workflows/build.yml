@@ -1,11 +1,11 @@
 name: Build Pipeline
 on:
-  push:
-    branches:
-      - "build"
-    paths:
-      - "**/*"
-      - "!**/README.md"
+  # push:
+  #   branches:
+  #     - "build"
+  #   paths:
+  #     - "**/*"
+  #     - "!**/README.md"
   workflow_dispatch:
 
 defaults:
