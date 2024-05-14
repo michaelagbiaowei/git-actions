@@ -65,7 +65,7 @@ jobs:
       - name: Run Security Scans
         run: |
           npm audit fix --prefix frontend
-          npm install --save-dev html-webpack-plugin@5.5.0 --prefix frontend
+          npm install --save-dev html-webpack-plugin@latest --prefix frontend
           npm update --prefix frontend
           npm audit fix --audit-level=critical --force --prefix frontend
           npm audit --audit-level=critical --prefix frontend
@@ -84,7 +84,7 @@ jobs:
       - name: Run Security Scans
         run: |
           npm audit fix --prefix backend
-          npm install --save-dev html-webpack-plugin@5.5.0 --prefix backend
+          npm install --save-dev html-webpack-plugin@latest --prefix backend
           npm update --prefix backend
           npm audit fix --audit-level=critical --force --prefix backend
           npm audit --audit-level=critical --prefix backend
@@ -111,12 +111,12 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.FRONTEND_IMAGE }}/v1
-          
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.FRONTEND_IMAGE }}:v1
+
       - name: Build backend and push Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.BACKEND_IMAGE }}/v1
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.BACKEND_IMAGE }}:v1
