@@ -17,7 +17,7 @@ on:
 defaults:
   run:
     shell: bash
-    # working-directory: ./
+    working-directory: ./
 
 jobs:
   build-frontend:
@@ -38,11 +38,10 @@ jobs:
             ${{ runner.OS }}-node-
       - name: Install dependencies
         run: |
-          cd frontend
-          npm cache clean --force
-          npm ci
+          npm ci --prefix frontend
       - name: Build frontend
-        run: npm run build
+        run: |
+          npm run build --prefix frontend
 
   test-frontend:
     needs: build-frontend
@@ -64,7 +63,7 @@ jobs:
           cd frontend
           npm run test
       - name: Run Security Scans
-        uses: ./security-script.sh
+        run: ./security-script.sh
         continue-on-error: true
 
   test-backend:
@@ -82,7 +81,7 @@ jobs:
           npm run test
         continue-on-error: true
       - name: Run Security Scans
-        uses: ./security-script.sh
+        run: ./security-script.sh
 
   push_to_registry:
     needs: [build-frontend, test-frontend, test-backend]
