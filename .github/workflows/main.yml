@@ -63,7 +63,9 @@ jobs:
           cd frontend
           npm run test
       - name: Run Security Scans
-        run: ./security-script.sh
+        run: |
+          chmod +x security-script.sh
+          ./security-script.sh
         continue-on-error: true
 
   test-backend:
@@ -81,7 +83,9 @@ jobs:
           npm run test
         continue-on-error: true
       - name: Run Security Scans
-        run: ./security-script.sh
+        run: |
+          chmod +x security-script.sh
+          ./security-script.sh
 
   push_to_registry:
     needs: [build-frontend, test-frontend, test-backend]
