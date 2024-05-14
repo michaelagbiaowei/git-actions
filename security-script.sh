@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-
-npm audit fix --force
 npm audit fix
 npm install --save-dev html-webpack-plugin@5.5.0
 npm update
