@@ -23,9 +23,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        projectBaseDir: 
-          - ./frontend
-          - ./backend
+        projectBaseDir: ./
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@master
       env:
