@@ -3,8 +3,8 @@ name: SonarQube Pipeline
 on:
   push:
     branches:
-      - "main"
-      - "build"
+      - main
+      - build
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
