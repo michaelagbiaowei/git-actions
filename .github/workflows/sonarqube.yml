@@ -36,7 +36,7 @@ jobs:
             -Dsonar.projectKey=npm-frontend
             -Dsonar.organization=michaelagbiaowei
             -Dsonar.sources=.
-            -X  # Enable debug logging
+            -X 
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -68,7 +68,7 @@ jobs:
             -Dsonar.projectKey=npm-backend
             -Dsonar.organization=michaelagbiaowei
             -Dsonar.sources=.
-            -X  # Enable debug logging
+            -X 
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
