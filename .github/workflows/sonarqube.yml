@@ -20,13 +20,23 @@ jobs:
   sonarqube:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        projectBaseDir: ./
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        LC_ALL: "ru_RU.UTF-8"
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: Install SonarQube Scanner
+        run: |
+          npm install --global --prefix=$HOME/sonar-scanner sonar-scanner
+        env:
+          SONAR_SCANNER_VERSION: 4.8.0.2856
+      - name: SonarQube Analysis
+        run: |
+          $HOME/sonar-scanner/bin/sonar-scanner
+          -Dsonar.projectKey=your-project-key
+          -Dsonar.sources=.
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
