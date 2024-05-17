@@ -3,24 +3,19 @@ name: SonarQube Pipeline
 on:
   push:
     branches:
-      # - main
       - build
-  # pull_request:
-  #   types: [opened, synchronize, reopened]
-
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
-  DemoSonarCloudSCan:
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-            fetch-depth: 0
+          fetch-depth: 0
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@master
         env:
-            GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-              -Dsonar.organization=michaelagbiaowei
-              -Dsonar.projectKey=michaelagbiaowei
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
