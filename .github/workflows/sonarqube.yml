@@ -1,4 +1,5 @@
 name: SonarQube Pipeline
+
 on:
   push:
     branches:
@@ -11,18 +12,22 @@ jobs:
   sonarqube-frontend:
     name: SonarQube Scan (Frontend)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18.x"
+
       - name: Install dependencies (Frontend)
         run: npm ci
         working-directory: ./frontend
+
       - name: SonarQube Scan (Frontend)
         uses: sonarsource/sonarqube-scan-action@master
         with:
@@ -31,7 +36,7 @@ jobs:
             -Dsonar.projectKey=npm-frontend
             -Dsonar.organization=michaelagbiaowei
             -Dsonar.sources=.
-            - "-X" 
+            -X  # Enable debug logging
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -39,18 +44,22 @@ jobs:
   sonarqube-backend:
     name: SonarQube Scan (Backend)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18.x"
+
       - name: Install dependencies (Backend)
         run: npm ci
         working-directory: ./backend
+
       - name: SonarQube Scan (Backend)
         uses: sonarsource/sonarqube-scan-action@master
         with:
@@ -59,7 +68,7 @@ jobs:
             -Dsonar.projectKey=npm-backend
             -Dsonar.organization=michaelagbiaowei
             -Dsonar.sources=.
-            - "-X" 
+            -X  # Enable debug logging
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
