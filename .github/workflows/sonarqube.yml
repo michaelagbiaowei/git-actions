@@ -9,66 +9,18 @@ on:
   #   types: [opened, synchronize, reopened]
 
 jobs:
-  sonarqube-frontend:
-    name: SonarQube Scan (Frontend)
+  DemoSonarCloudSCan:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18.x"
-
-      - name: Install dependencies (Frontend)
-        run: npm ci
-        working-directory: ./frontend
-
-      - name: SonarQube Scan (Frontend)
-        uses: sonarsource/sonarqube-scan-action@master
-        with:
-          projectBaseDir: ./frontend
-          args: >
-            -Dsonar.projectKey=npm-frontend
-            -Dsonar.organization=michaelagbiaowei
-            -Dsonar.sources=.
-            -X 
+            fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-  sonarqube-backend:
-    name: SonarQube Scan (Backend)
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
+            GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18.x"
-
-      - name: Install dependencies (Backend)
-        run: npm ci
-        working-directory: ./backend
-
-      - name: SonarQube Scan (Backend)
-        uses: sonarsource/sonarqube-scan-action@master
-        with:
-          projectBaseDir: ./backend
           args: >
-            -Dsonar.projectKey=npm-backend
-            -Dsonar.organization=michaelagbiaowei
-            -Dsonar.sources=.
-            -X 
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+              -Dsonar.organization=michaelagbiaowei
+              -Dsonar.projectKey=michaelagbiaowei
