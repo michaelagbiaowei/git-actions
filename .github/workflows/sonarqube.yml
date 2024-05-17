@@ -3,8 +3,8 @@ name: SonarQube Pipeline
 on:
   push:
     branches:
-      - main
-      # - build
+      # - main
+      - build
   # pull_request:
   #   types: [opened, synchronize, reopened]
 
@@ -22,5 +22,5 @@ jobs:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-              -Dsonar.organization=michaelagbiaowei
-              -Dsonar.projectKey=git-actions
+              -Dsonar.organization="Michael Agbiaowei"
+              -Dsonar.projectKey=michaelagbiaowei
