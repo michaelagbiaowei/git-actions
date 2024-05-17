@@ -1,9 +1,11 @@
 name: Trivy Pipeline
 
 on:
+  pull_request:
+    types: [opened, synchronize, reopened]
   schedule:
-    - cron: "0 12 * * *" # Detect your docker image vulnerability every day at 12:00 (UTC).
-
+    - cron: "*/5 * * * *" # Detect your docker image vulnerability every day at 12:00 (UTC).
+    
 jobs:
   scan:
     name: Daily Vulnerability Scan
