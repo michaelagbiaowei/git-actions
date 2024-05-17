@@ -23,4 +23,4 @@ jobs:
         with:
           args: >
               -Dsonar.organization=michaelagbiaowei
-              -Dsonar.projectKey=michaelagbiaowei
+              -Dsonar.projectKey=git-actions
