@@ -1,42 +1,63 @@
-name: sonarqube Pipeline
-
+name: SonarQube Pipeline
 on:
   push:
     branches:
-      # - "main"
-      - "build"
-  #   paths:
-  #     - "**/*"
-  #     - "!**/README.md"
+      # - main
+      - build
   # pull_request:
-  #     types: [opened, synchronize, reopened]
-
-defaults:
-  run:
-    shell: bash
-    working-directory: ./
+  #   types: [opened, synchronize, reopened]
 
 jobs:
-  sonarqube:
+  sonarqube-frontend:
+    name: SonarQube Scan (Frontend)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
         with:
-          node-version: '16.x'
-      - name: Install SonarQube Scanner
-        run: |
-          npm install --global --prefix=$HOME/sonar-scanner sonar-scanner
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+      - name: Install dependencies (Frontend)
+        run: npm ci
+        working-directory: ./frontend
+      - name: SonarQube Scan (Frontend)
+        uses: sonarsource/sonarqube-scan-action@master
+        with:
+          projectBaseDir: ./frontend
+          args: >
+            -Dsonar.projectKey=npm-frontend
+            -Dsonar.organization=michaelagbiaowei
+            -Dsonar.sources=.
         env:
-          SONAR_SCANNER_VERSION: 4.8.0.2856
-      - name: SonarQube Analysis
-        run: |
-          $HOME/sonar-scanner/bin/sonar-scanner
-          -Dsonar.projectKey=your-project-key
-          -Dsonar.sources=.
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  sonarqube-backend:
+    name: SonarQube Scan (Backend)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+      - name: Install dependencies (Backend)
+        run: npm ci
+        working-directory: ./backend
+      - name: SonarQube Scan (Backend)
+        uses: sonarsource/sonarqube-scan-action@master
+        with:
+          projectBaseDir: ./backend
+          args: >
+            -Dsonar.projectKey=npm-backend
+            -Dsonar.organization=michaelagbiaowei
+            -Dsonar.sources=.
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
