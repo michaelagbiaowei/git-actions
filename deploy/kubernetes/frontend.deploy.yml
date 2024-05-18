@@ -18,11 +18,24 @@ spec:
   template:
     metadata:
       labels:
-        app:  frontend
+        app: frontend
     spec:
+      # serviceAccountName: frontendservice
+      # terminationGracePeriodSeconds: 5
+      # securityContext:
+      #   fsGroup: 1000
+      #   runAsGroup: 1000
+      #   runAsNonRoot: true
       containers:
-      - name:  frontend-server
-        image:  FRONTEND_IMAGE
+      - name: frontend-server
+        # securityContext:
+        #   allowPrivilegeEscalation: false
+        #   capabilities:
+        #     drop:
+        #       - ALL
+        #   privileged: false
+        #   readOnlyRootFilesystem: true
+        image: FRONTEND_IMAGE
         resources:
           requests:
             cpu: 100m

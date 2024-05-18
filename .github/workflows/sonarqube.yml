@@ -7,6 +7,11 @@ on:
   #     - build
   pull_request:
     types: [opened, synchronize, reopened]
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./
     
 jobs:
   sonarcloud:

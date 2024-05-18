@@ -6,6 +6,12 @@ metadata:
   labels:
     app:  backend
 spec:
+  # serviceAccountName: frontendservice
+  # terminationGracePeriodSeconds: 5
+  # securityContext:
+  #   fsGroup: 1000
+  #   runAsGroup: 1000
+  #   runAsNonRoot: true
   selector:
     matchLabels:
       app: backend
@@ -21,6 +27,13 @@ spec:
         app:  backend
     spec:
       containers:
+        # securityContext:
+        #   allowPrivilegeEscalation: false
+        #   capabilities:
+        #     drop:
+        #       - ALL
+        #   privileged: false
+        #   readOnlyRootFilesystem: true
       - name:  backend-server
         image: BACKEND_IMAGE
         resources:
@@ -49,9 +62,9 @@ spec:
           periodSeconds: 10
         env:
         - name: MONGO_URI
-          value: MONGO_URI
-        - PORT: PORT
-          value: PORT
+          value: "MONGO_URI"
+        - name: PORT
+          value: "PORT"
         ports:
         - containerPort:  7000
           name:  backend
