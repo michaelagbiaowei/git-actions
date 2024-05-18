@@ -5,6 +5,8 @@ metadata:
   namespace: default
   labels:
     app:  frontend
+  annotations:
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
 spec:
   selector:
     matchLabels:
