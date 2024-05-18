@@ -1,10 +1,10 @@
 name: SonarQube Pipeline
 
 on:
-  push:
-    branches:
-      - main
-      - build
+  # push:
+  #   branches:
+  #     - main
+  #     - build
   pull_request:
     types: [opened, synchronize, reopened]
     
