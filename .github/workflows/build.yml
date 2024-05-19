@@ -7,10 +7,10 @@ on:
   #   paths:
   #     - "**/*"
   #     - "!**/README.md"
-  
-  # workflow_run:
-  #   workflows: ["SonarQube Pipeline"]
-  #   types: [completed]
+
+  workflow_run:
+    workflows: ["SonarQube Pipeline"]
+    types: [completed]
   workflow_dispatch:
 
 defaults:
