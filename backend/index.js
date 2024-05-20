@@ -16,7 +16,7 @@ app.use(cors(corsOptions));
 // Middleware for parsing JSON data
 app.use(express.json());
 
-app.get('/_healthz', (req, res) => {
+app.get('/_healthz, (req, res) => {
   res.send('Hello from blog app');
 });
 
